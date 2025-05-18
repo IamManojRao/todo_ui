@@ -1,0 +1,80 @@
+<div class="home-container" style="padding-top: 5%;">
+  <!-- Top navbar -->
+  <div class="top-navbar">
+    <span class="app-title">
+      <mat-icon>edit_note</mat-icon> Todo App
+    </span>
+    <span class="spacer"></span>
+    <button mat-stroked-button color="warn" (click)="logout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </div>
+
+  <!-- Todo Form -->
+  <form (ngSubmit)="createTodo()" class="todo-form">
+  <div class="input-button-wrapper">
+    <mat-form-field appearance="outline" class="todo-input full-width">
+      <input
+        matInput
+        placeholder="Add new todo"
+        [(ngModel)]="newTodoTitle"
+        name="newTodo"
+        required
+      />
+    </mat-form-field>
+
+    <button mat-icon-button class="add-button" type="submit">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</form>
+
+
+  <!-- New Full Width Div below text field -->
+  <div class="todo-meta-bar">
+    <!-- You can customize this: show count, filter, or just a label -->
+    <span>You have {{ todos.length }} task(s)</span>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="todos.length === 0" class="empty-message">
+    No todos yet. Add one!
+  </div>
+
+  <!-- Todo list -->
+  <mat-list *ngIf="todos.length > 0" class="todo-list">
+  <mat-list-item *ngFor="let todo of todos" class="todo-list-item">
+    <div class="todo-item-content">
+
+      <!-- Edit mode -->
+      <ng-container *ngIf="editingTodoId === todo._id; else viewMode">
+        <mat-form-field appearance="outline" class="edit-field">
+          <input matInput [(ngModel)]="editedTitle" name="editedTitle" placeholder="Edit todo" />
+        </mat-form-field>
+        <button mat-icon-button color="primary" (click)="updateTodo(todo)">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="cancelEdit()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </ng-container>
+
+      <!-- View mode -->
+      <ng-template #viewMode>
+        <span class="todo-title">{{ todo.title }}</span>
+        <div class="todo-actions">
+          <button mat-icon-button color="accent" (click)="startEdit(todo)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteTodo(todo._id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </ng-template>
+
+    </div>
+  </mat-list-item>
+</mat-list>
+
+
+</div>

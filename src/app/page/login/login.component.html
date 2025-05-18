@@ -1,0 +1,42 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header class="card-header">
+      <mat-card-title class="title">Welcome</mat-card-title>
+      <mat-card-subtitle class="subtitle">
+        {{ isLoginMode ? 'Sign in to continue' : 'Create a new account' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" class="login-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            autocomplete="email"
+            class="custom-input"  
+          />
+          <mat-icon matSuffix>mail</mat-icon>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="full-width action-button">
+            Login
+          <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+        </button>
+      </form>
+      <br>
+      <div *ngIf="errorMessage" class="error-message">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ errorMessage }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
